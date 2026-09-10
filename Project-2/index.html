@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verdant — Skincare matched to your skin's chemistry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ---------- Tokens ---------- */
+  :root{
+    --ink:        #1E2A22;
+    --ink-soft:   #4B5A50;
+    --paper:      #EEF1EA;
+    --paper-alt:  #FFFFFF;
+    --line:       #D6DCCF;
+    --accent:     #C97A3D;
+    --accent-ink: #7A431F;
+    --mint:       #D9E6D3;
+    --mint-ink:   #35543E;
+
+    --serif: "Fraunces", Georgia, serif;
+    --sans:  "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --step-0: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+    --step-1: clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
+    --step-2: clamp(1.4rem, 1.2rem + 0.9vw, 1.9rem);
+    --step-3: clamp(1.9rem, 1.5rem + 1.8vw, 2.9rem);
+    --step-4: clamp(2.4rem, 1.7rem + 3.2vw, 4.2rem);
+
+    --gutter: clamp(1.25rem, 1rem + 2vw, 3rem);
+    --maxw: 1180px;
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color: inherit; }
+  h1,h2,h3{
+    font-family: var(--serif);
+    font-weight: 500;
+    line-height: 1.15;
+    margin: 0 0 0.5em;
+    color: var(--ink);
+  }
+  p{ margin: 0 0 1em; color: var(--ink-soft); max-width: 62ch; }
+
+  :focus-visible{
+    outline: 3px solid var(--accent-ink);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  .wrap{
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.5em;
+    min-height: 44px;
+    padding: 0.7em 1.4em;
+    border-radius: 4px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration:none;
+    border: 1px solid transparent;
+    cursor:pointer;
+  }
+  .btn-primary{ background: var(--accent); color: #fff; }
+  .btn-primary:hover{ background: var(--accent-ink); }
+  .btn-ghost{ background: transparent; border-color: var(--ink); color: var(--ink); }
+  .btn-ghost:hover{ background: var(--ink); color: var(--paper); }
+
+  .eyebrow-tag{
+    display:inline-block;
+    background: var(--mint);
+    color: var(--mint-ink);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3em 0.8em;
+    border-radius: 999px;
+  }
+
+  /* ---------- Header (Grid macro / Flexbox micro) ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row{
+    display:grid;
+    grid-template-columns: auto 1fr auto;
+    align-items:center;
+    gap: var(--gutter);
+    padding-block: 1rem;
+  }
+  .logo{
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration:none;
+    color: var(--ink);
+  }
+  .nav-links{
+    display:none;
+    list-style:none;
+    margin:0; padding:0;
+    gap: 1.8rem;
+  }
+  .nav-links a{
+    text-decoration:none;
+    font-weight: 500;
+    color: var(--ink-soft);
+    padding: 0.6em 0.1em;
+  }
+  .nav-links a:hover{ color: var(--ink); }
+
+  .nav-actions{
+    display:flex;
+    align-items:center;
+    gap: 0.6rem;
+  }
+
+  .hamburger{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width: 44px; height: 44px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    background: var(--paper-alt);
+    cursor:pointer;
+  }
+  .hamburger svg{ width: 20px; height: 20px; }
+
+  /* Mobile popover nav — no JS required */
+  #mobile-nav{
+    margin:0; padding: 1.25rem var(--gutter) 2rem;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-alt);
+    width: 100%;
+    inset: 0 auto auto 0;
+    top: 0;
+    position: fixed;
+  }
+  #mobile-nav::backdrop{
+    background: rgba(30,42,34,0.35);
+  }
+  #mobile-nav ul{
+    list-style:none; margin: 1rem 0 0; padding:0;
+    display:flex; flex-direction:column; gap: 0.25rem;
+  }
+  #mobile-nav a{
+    display:flex;
+    align-items:center;
+    min-height: 44px;
+    text-decoration:none;
+    font-weight: 500;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+  #mobile-nav .mobile-nav-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding-block: clamp(2.5rem, 2rem + 3vw, 5rem);
+  }
+  .hero-grid{
+    display:grid;
+    gap: 2.5rem;
+    align-items:center;
+  }
+  .hero h1{ font-size: var(--step-4); margin-block: 0.4em 0.4em; }
+  .hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0.9rem;
+    margin-block: 1.5rem;
+  }
+  .hero-stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 1.75rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .stat b{
+    display:block;
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    color: var(--ink);
+  }
+  .stat span{ font-size: 0.85rem; color: var(--ink-soft); }
+
+  .hero-panel{
+    background: linear-gradient(155deg, var(--mint) 0%, var(--paper-alt) 70%);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  }
+  .molecule-row{ display:flex; flex-wrap:wrap; gap: 0.6rem; margin-bottom: 1rem; }
+  .molecule-chip{
+    display:flex; align-items:center; gap:0.5rem;
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.5em 0.9em;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .molecule-chip .dot{ width:8px; height:8px; border-radius:50%; background: var(--accent); flex-shrink:0; }
+
+  /* ---------- How it works ---------- */
+  .section{ padding-block: clamp(2.5rem, 2rem + 3vw, 5rem); }
+  .section-head{ max-width: 46ch; margin-bottom: clamp(1.75rem, 1.4rem + 1.5vw, 3rem); }
+  .section-head h2{ font-size: var(--step-3); }
+
+  .steps-grid{
+    display:grid;
+    gap: 1.75rem;
+  }
+  .step-card{
+    display:flex;
+    flex-direction:column;
+    gap: 0.6rem;
+  }
+  .step-num{
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    color: var(--accent-ink);
+  }
+  .step-card h3{ font-size: var(--step-1); margin-bottom:0.2em; }
+
+  /* ---------- Ingredient grid ---------- */
+  .ingredient-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+  .ingredient-card{
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display:flex;
+    flex-direction:column;
+    gap: 0.75rem;
+  }
+  .ingredient-card h3{ font-size: var(--step-1); margin:0; }
+  .ingredient-card p{ margin:0; font-size: 0.92rem; }
+  .ingredient-tags{ display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:auto; }
+
+  /* ---------- Quote ---------- */
+  .quote-section{
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .quote-section .wrap{
+    max-width: 760px;
+    text-align:left;
+  }
+  .quote-section blockquote{
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    font-weight: 500;
+    line-height:1.35;
+    margin: 0 0 1rem;
+  }
+  .quote-section cite{ font-style:normal; color: #B7C4B4; font-size:0.9rem; }
+
+  /* ---------- CTA band ---------- */
+  .cta-band{
+    background: var(--mint);
+  }
+  .cta-grid{
+    display:grid;
+    gap: 1.5rem;
+    align-items:center;
+  }
+  .cta-grid h2{ font-size: var(--step-3); margin:0; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 2rem + 2vw, 4rem) 2rem;
+  }
+  .footer-grid{
+    display:grid;
+    gap: 2rem;
+  }
+  .footer-brand p{ font-size:0.9rem; }
+  .footer-col h3{
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.9rem;
+  }
+  .footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0.6rem; }
+  .footer-col a{ text-decoration:none; color: var(--ink-soft); font-size:0.9rem; }
+  .footer-col a:hover{ color: var(--ink); }
+  .footer-bottom{
+    display:flex;
+    flex-direction:column;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  /* ================= BREAKPOINT: 480px — phone landscape / large phone ================= */
+  @media (min-width: 480px){
+    .hero-actions{ flex-wrap:nowrap; }
+    .steps-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ================= BREAKPOINT: 768px — tablet ================= */
+  @media (min-width: 768px){
+    .hero-grid{ grid-template-columns: 1.1fr 0.9fr; }
+    .steps-grid{ grid-template-columns: repeat(3, 1fr); }
+    .cta-grid{ grid-template-columns: 1fr auto; }
+    .footer-grid{ grid-template-columns: 1.4fr repeat(3, 1fr); }
+  }
+
+  /* ================= BREAKPOINT: 1024px — desktop ================= */
+  @media (min-width: 1024px){
+    .nav-links{ display:flex; }
+    .hamburger{ display:none; }
+    .hero-grid{ grid-template-columns: 1fr 0.85fr; gap: 4rem; }
+  }
+
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap nav-row">
+      <a class="logo" href="#top">Verdant</a>
+
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#ingredients">Ingredients</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="#" style="display:none">Log in</a>
+        <a class="btn btn-primary" href="#quiz">Start quiz</a>
+        <button class="hamburger" popovertarget="mobile-nav" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div popover id="mobile-nav">
+    <div class="mobile-nav-top">
+      <span class="logo">Verdant</span>
+      <button class="hamburger" popovertarget="mobile-nav" popovertargetaction="hide" aria-label="Close menu">✕</button>
+    </div>
+    <ul>
+      <li><a href="#how-it-works" popovertarget="mobile-nav" popovertargetaction="hide">How it works</a></li>
+      <li><a href="#ingredients" popovertarget="mobile-nav" popovertargetaction="hide">Ingredients</a></li>
+      <li><a href="#reviews" popovertarget="mobile-nav" popovertargetaction="hide">Reviews</a></li>
+      <li><a href="#quiz" popovertarget="mobile-nav" popovertargetaction="hide">Start quiz</a></li>
+    </ul>
+  </div>
+
+  <main id="top">
+
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow-tag">2-minute skin quiz</span>
+          <h1>Skincare built from your skin's actual chemistry.</h1>
+          <p>Verdant matches you to the actives your skin responds to — not the ones trending this week — then tracks how your routine performs over time.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" id="quiz" href="#">Take the skin quiz</a>
+            <a class="btn btn-ghost" href="#how-it-works">See how it works</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><b>42</b><span>actives mapped to skin profiles</span></div>
+            <div class="stat"><b>18k</b><span>routines tracked to date</span></div>
+            <div class="stat"><b>6 wks</b><span>average time to visible change</span></div>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="molecule-row">
+            <span class="molecule-chip"><span class="dot"></span>Niacinamide</span>
+            <span class="molecule-chip"><span class="dot"></span>Azelaic acid</span>
+            <span class="molecule-chip"><span class="dot"></span>Bakuchiol</span>
+          </div>
+          <div class="molecule-row">
+            <span class="molecule-chip"><span class="dot"></span>Centella asiatica</span>
+            <span class="molecule-chip"><span class="dot"></span>Squalane</span>
+          </div>
+          <p style="margin-top:1rem; font-size:0.9rem;">Your matched actives update automatically as your routine log grows — no guesswork, no re-buying the same serum three times.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Three steps, one routine that actually fits</h2>
+          <p>No subscriptions to cancel, no fifteen-step routines. Just a clear read on what your skin needs next.</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <span class="step-num">01</span>
+            <h3>Take the skin quiz</h3>
+            <p>Answer questions about your skin type, current concerns, and the products already in your cabinet.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">02</span>
+            <h3>Get matched ingredients</h3>
+            <p>See which actives fit your skin and why — cross-checked against what you already own, so nothing goes to waste.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">03</span>
+            <h3>Track your routine</h3>
+            <p>Log daily use and watch how your skin responds over weeks, with reminders when it's time to reassess.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ingredients" style="background:var(--paper-alt); border-block:1px solid var(--line);">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Ingredient spotlight</h2>
+          <p>A few of the actives Verdant most commonly matches, and what each one is actually good for.</p>
+        </div>
+        <div class="ingredient-grid">
+          <div class="ingredient-card">
+            <h3>Niacinamide</h3>
+            <p>Strengthens the skin barrier and evens tone over consistent daily use.</p>
+            <div class="ingredient-tags"><span class="eyebrow-tag">Barrier repair</span></div>
+          </div>
+          <div class="ingredient-card">
+            <h3>Azelaic acid</h3>
+            <p>Calms redness and congestion without the irritation common to stronger acids.</p>
+            <div class="ingredient-tags"><span class="eyebrow-tag">Redness</span></div>
+          </div>
+          <div class="ingredient-card">
+            <h3>Bakuchiol</h3>
+            <p>A gentler, plant-derived alternative to retinol for sensitive or reactive skin.</p>
+            <div class="ingredient-tags"><span class="eyebrow-tag">Renewal</span></div>
+          </div>
+          <div class="ingredient-card">
+            <h3>Centella asiatica</h3>
+            <p>Soothes irritation and supports recovery after exfoliation or breakouts.</p>
+            <div class="ingredient-tags"><span class="eyebrow-tag">Soothing</span></div>
+          </div>
+          <div class="ingredient-card">
+            <h3>Squalane</h3>
+            <p>A lightweight oil that mimics skin's natural lipids to lock in moisture.</p>
+            <div class="ingredient-tags"><span class="eyebrow-tag">Hydration</span></div>
+          </div>
+          <div class="ingredient-card">
+            <h3>Vitamin C</h3>
+            <p>Brightens tone and helps defend against everyday environmental stress.</p>
+            <div class="ingredient-tags"><span class="eyebrow-tag">Brightening</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-section" id="reviews">
+      <div class="wrap section">
+        <blockquote>"I stopped buying serums that sounded good and started buying the ones Verdant actually matched me to. My skin noticed the difference before I did."</blockquote>
+        <cite>— Verdant routine, week 9</cite>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="wrap section cta-grid">
+        <h2>Ready to stop guessing your routine?</h2>
+        <a class="btn btn-primary" href="#quiz">Create free account</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="#top">Verdant</a>
+        <p>Ingredient-matched skincare routines, built from your skin's own data.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Product</h3>
+        <ul>
+          <li><a href="#ingredients">Ingredients</a></li>
+          <li><a href="#how-it-works">Routines</a></li>
+          <li><a href="#">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="#">Ingredient library</a></li>
+          <li><a href="#">Guides</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© 2026 Verdant. Built as a DecodeLabs frontend training project.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
