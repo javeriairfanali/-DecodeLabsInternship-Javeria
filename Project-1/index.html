@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlowRoutine — Skincare Essentials</title>
+  <meta name="description" content="GlowRoutine — a clean, simple guide to building a skincare routine that works for your skin.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="site-header__logo">GlowRoutine</div>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <ul class="site-nav__list">
+        <li class="site-nav__item"><a class="site-nav__link" href="#home">Home</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="#services">Services</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="#about">About</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ============ HERO SECTION ============ -->
+    <section class="hero" id="home" aria-labelledby="hero-heading">
+      <div class="hero__container">
+        <h1 id="hero-heading" class="hero__headline">Skincare, simplified.</h1>
+        <p class="hero__subtext">
+          Build a routine that actually fits your skin — no 12-step
+          overwhelm, just the essentials that work.
+        </p>
+        <a class="hero__cta" href="#services">Explore Routines</a>
+      </div>
+    </section>
+
+    <!-- ============ CONTENT GRID ============ -->
+    <section class="services" id="services" aria-labelledby="services-heading">
+      <h2 id="services-heading" class="services__heading">Why Start With Us</h2>
+
+      <div class="services__grid">
+
+        <article class="card">
+          <img
+            class="card__image"
+            src="images/cleanser.webp"
+            alt="A gentle gel cleanser being dispensed onto a hand"
+            width="280"
+            height="200"
+            loading="lazy">
+          <h3 class="card__title">Know Your Skin Type</h3>
+          <p class="card__text">
+            A short guided quiz helps you figure out whether your skin
+            leans oily, dry, combination, or sensitive — before you
+            spend on the wrong products.
+          </p>
+        </article>
+
+        <article class="card">
+          <img
+            class="card__image"
+            src="images/ingredients.webp"
+            alt="Close-up of skincare ingredient bottles labelled with active names"
+            width="280"
+            height="200"
+            loading="lazy">
+          <h3 class="card__title">Understand Ingredients</h3>
+          <p class="card__text">
+            Plain-language breakdowns of actives like niacinamide,
+            retinol, and salicylic acid, so labels stop feeling like
+            a chemistry exam.
+          </p>
+        </article>
+
+        <article class="card">
+          <img
+            class="card__image"
+            src="images/routine.webp"
+            alt="Skincare products arranged in morning and evening routine order"
+            width="280"
+            height="200"
+            loading="lazy">
+          <h3 class="card__title">Build a Routine</h3>
+          <p class="card__text">
+            A simple AM/PM layering order — cleanse, treat,
+            moisturize, protect — designed to be easy to actually
+            stick to.
+          </p>
+        </article>
+
+        <article class="card">
+          <img
+            class="card__image"
+            src="images/spf.webp"
+            alt="Sunscreen tube standing next to a moisturizer jar"
+            width="280"
+            height="200"
+            loading="lazy">
+          <h3 class="card__title">Protect Daily</h3>
+          <p class="card__text">
+            Reminders and tips on why daily SPF is the one step that
+            protects everything else you're doing.
+          </p>
+        </article>
+
+        <article class="card">
+          <img
+            class="card__image"
+            src="images/track.webp"
+            alt="A notebook page tracking weekly skin progress"
+            width="280"
+            height="200"
+            loading="lazy">
+          <h3 class="card__title">Track Progress</h3>
+          <p class="card__text">
+            Log how your skin responds week to week, so you know
+            what's actually working before you switch products again.
+          </p>
+        </article>
+
+        <article class="card">
+          <img
+            class="card__image"
+            src="images/community.webp"
+            alt="Two people comparing notes on a skincare routine"
+            width="280"
+            height="200"
+            loading="lazy">
+          <h3 class="card__title">Ask Real Questions</h3>
+          <p class="card__text">
+            A community space for the questions Google can't quite
+            answer — like "can I mix these two actives?"
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ ABOUT SECTION ============ -->
+    <section class="about" id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading" class="about__heading">About GlowRoutine</h2>
+      <p class="about__text">
+        GlowRoutine started as a small student project with one goal:
+        make skincare information clear enough that anyone can build a
+        routine with confidence, without needing to decode ingredient
+        lists or chase every new trend.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer" id="contact">
+    <div class="site-footer__section">
+      <h2 class="site-footer__heading">Get In Touch</h2>
+      <address class="site-footer__contact">
+        <p>Email: <a href="mailto:hello@glowroutine.example">hello@glowroutine.example</a></p>
+        <p>Location: Karachi, Pakistan</p>
+      </address>
+    </div>
+
+    <div class="site-footer__section">
+      <h2 class="site-footer__heading">Stay Updated</h2>
+      <form class="newsletter" action="#" method="post">
+        <label class="newsletter__label" for="newsletter-email">Email address</label>
+        <div class="newsletter__row">
+          <input
+            class="newsletter__input"
+            type="email"
+            id="newsletter-email"
+            name="email"
+            placeholder="you@example.com"
+            required>
+          <button class="newsletter__button" type="submit">Subscribe</button>
+        </div>
+      </form>
+    </div>
+
+    <p class="site-footer__copyright">&copy; 2026 GlowRoutine. Built as a DecodeLabs Frontend Development submission.</p>
+  </footer>
+
+</body>
+</html>
