@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bare Practice — Skincare, without the guesswork</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F2E9;
+    --paper-dim: #EAE5D6;
+    --ink: #2B2A25;
+    --ink-soft: #756F5E;
+    --rule: #DCD4BE;
+    --clay: #B65C43;
+    --clay-deep: #8C4531;
+    --sage: #6E8266;
+    --card: #FFFDF8;
+    --focus: #3D6E8C;
+  }
+
+  [data-theme="dark"] {
+    --paper: #171512;
+    --paper-dim: #201D18;
+    --ink: #EFE9D9;
+    --ink-soft: #A69C87;
+    --rule: #35301F;
+    --card: #201D18;
+    --clay: #E38A6C;
+    --clay-deep: #F0A98D;
+    --sage: #94AC8B;
+    --focus: #7FB6DB;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.5;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------------- Nav ---------------- */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .site-nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  #js-theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 7px 14px 7px 10px;
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--ink);
+  }
+
+  #js-theme-toggle .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-soft);
+  }
+  [data-theme="dark"] #js-theme-toggle .dot {
+    background: var(--clay);
+    box-shadow: 0 0 6px var(--clay);
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+
+  /* ---------------- Hero ---------------- */
+  .hero {
+    padding: 76px 0 64px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.1;
+    max-width: 15ch;
+  }
+
+  .hero p {
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    max-width: 42ch;
+    margin: 18px 0 28px;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 13px 24px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .hero-art {
+    aspect-ratio: 4 / 3;
+    border-radius: 10px;
+    background: var(--paper-dim);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-art svg { width: 100%; height: 100%; }
+
+  @media (max-width: 780px) {
+    .hero { grid-template-columns: 1fr; padding-top: 48px; }
+    .hero-art { order: -1; }
+  }
+
+  /* ---------------- Shop by concern ---------------- */
+  .shop-section { padding: 20px 0 72px; }
+
+  .section-head { max-width: 56ch; margin-bottom: 32px; }
+  .section-head h2 { font-size: 1.7rem; font-weight: 600; }
+  .section-head p { color: var(--ink-soft); margin: 10px 0 0; }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .js-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    color: var(--ink-soft);
+    border-radius: 999px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+  .js-chip.is-active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  #js-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
+  }
+
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card .tag-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .product-card .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--sage);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 2px 7px;
+  }
+
+  .product-card .tag.is-strength { color: var(--clay-deep); }
+
+  .product-card h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .product-card p {
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+    margin: 0 0 16px;
+    flex: 1;
+  }
+
+  .product-card button {
+    align-self: flex-start;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    background: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    border-radius: 4px;
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+
+  .product-card button:hover { background: var(--ink); color: var(--paper); }
+
+  #js-grid-empty {
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 0.9rem;
+    display: none;
+  }
+
+  /* ---------------- Routine builder ---------------- */
+  .routine-section {
+    padding: 20px 0 80px;
+  }
+
+  .routine-panel {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 30px 30px 32px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 36px;
+  }
+
+  @media (max-width: 780px) {
+    .routine-panel { grid-template-columns: 1fr; }
+  }
+
+  .routine-list-col h3, .routine-status-col h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .routine-list-col > p, .routine-status-col > p {
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    margin: 0 0 18px;
+  }
+
+  #js-routine-list {
+    list-style: none;
+    margin: 0 0 6px;
+    padding: 0;
+  }
+
+  #js-routine-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 0;
+    border-top: 1px solid var(--rule);
+    font-size: 0.95rem;
+  }
+  #js-routine-list li:first-child { border-top: none; }
+
+  #js-routine-list li .step-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    width: 2ch;
+    flex-shrink: 0;
+  }
+
+  #js-routine-list li .product-text { flex: 1; }
+
+  #js-routine-list li.is-applied .product-text {
+    text-decoration: line-through;
+    color: var(--ink-soft);
+  }
+
+  #js-routine-list li button {
+    background: none;
+    border: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    padding: 4px 6px;
+  }
+  #js-routine-list li button:hover { color: var(--clay-deep); }
+
+  #js-routine-empty {
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+    font-style: italic;
+  }
+
+  .add-own-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  #js-custom-input {
+    flex: 1;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem;
+    border: 1px solid var(--rule);
+    background: var(--paper-dim);
+    color: var(--ink);
+    border-radius: 4px;
+    padding: 9px 11px;
+  }
+  #js-custom-input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+
+  #js-add-custom {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 4px;
+    padding: 0 16px;
+    cursor: pointer;
+  }
+
+  /* status column */
+  .status-block {
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+    margin-top: 16px;
+  }
+  .status-block:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+
+  .tally-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  #js-active-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.8rem;
+  }
+
+  .tally-row span.tally-label {
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+
+  .threshold-note {
+    font-size: 0.83rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .threshold-note.is-alert { color: var(--clay-deep); }
+
+  .switch-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .switch-row .label { font-size: 0.9rem; }
+  .switch-row .label small {
+    display: block;
+    color: var(--ink-soft);
+    font-size: 0.76rem;
+    margin-top: 2px;
+  }
+
+  .js-switch {
+    position: relative;
+    width: 40px;
+    height: 23px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: var(--paper-dim);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .js-switch::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: var(--ink-soft);
+    transition: transform 0.18s ease, background 0.18s ease;
+  }
+  .js-switch.is-on { background: var(--sage); border-color: var(--sage); }
+  .js-switch.is-on::after { transform: translateX(17px); background: var(--card); }
+
+  /* ---------------- Footer ---------------- */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 32px 0;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="container">
+    <span class="logo">Bare Practice</span>
+    <nav class="nav-links">
+      <a href="#shop">Shop by concern</a>
+      <a href="#routine">Your routine</a>
+    </nav>
+    <button id="js-theme-toggle" type="button" aria-pressed="false">
+      <span class="dot"></span>
+      <span id="js-theme-label">Light</span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner" style="display:contents">
+    <div>
+      <h1>Skincare, without the guesswork.</h1>
+      <p>Filter by what your skin is actually dealing with, then build a routine you'll keep track of — no spreadsheet required.</p>
+      <a href="#shop" class="hero-cta">Shop by concern</a>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="140" cy="150" r="90" fill="var(--sage)" opacity="0.35"/>
+        <circle cx="240" cy="110" r="60" fill="var(--clay)" opacity="0.3"/>
+        <circle cx="255" cy="200" r="45" fill="var(--ink)" opacity="0.12"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="shop" class="shop-section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Shop by concern</h2>
+      <p>Tap a concern to filter the shelf. Everything shown updates live — nothing here reloads the page.</p>
+    </div>
+
+    <div class="chip-row" id="js-chip-row">
+      <button class="js-chip is-active" data-concern="all" type="button">All</button>
+      <button class="js-chip" data-concern="acne" type="button">Acne &amp; marks</button>
+      <button class="js-chip" data-concern="pores" type="button">Pores</button>
+      <button class="js-chip" data-concern="dullness" type="button">Dullness</button>
+      <button class="js-chip" data-concern="hydration" type="button">Hydration</button>
+    </div>
+
+    <div id="js-product-grid"></div>
+    <p id="js-grid-empty">No products match that filter yet.</p>
+  </div>
+</section>
+
+<section id="routine" class="routine-section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Build your routine</h2>
+      <p>Add anything from the shelf above, or type in a product you already own. Check items off as you apply them.</p>
+    </div>
+
+    <div class="routine-panel">
+      <div class="routine-list-col">
+        <h3>Today's steps</h3>
+        <p>Ordered top to bottom — add cleanser first, SPF last.</p>
+
+        <ul id="js-routine-list"></ul>
+        <p id="js-routine-empty">Nothing added yet — pick a few products from the shelf.</p>
+
+        <div class="add-own-row">
+          <input type="text" id="js-custom-input" placeholder="Add your own, e.g. 'The Ordinary Niacinamide'" autocomplete="off" />
+          <button id="js-add-custom" type="button">Add</button>
+        </div>
+      </div>
+
+      <div class="routine-status-col">
+        <div class="status-block">
+          <h3>Active ingredient check</h3>
+          <div class="tally-row">
+            <span id="js-active-count">0</span>
+            <span class="tally-label">actives in today's routine</span>
+          </div>
+          <p class="threshold-note" id="js-threshold-note">Add products tagged "active" to see this update.</p>
+        </div>
+
+        <div class="status-block">
+          <div class="switch-row">
+            <span class="label">Warn me over the limit<small>Flags the count above once it passes 2 actives</small></span>
+            <button class="js-switch is-on" id="js-warn-switch" type="button" aria-pressed="true" aria-label="Toggle active ingredient warnings"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <span>Bare Practice — a student project built for DecodeLabs, Project 3</span>
+    <span>hello@barepractice.example</span>
+  </div>
+</footer>
+
+<script>
+  /* ======================================================
+     Theme toggle — dark/light mode.
+     Input: click on #js-theme-toggle
+     Process: flip a boolean, write it to the root dataset
+     Output: CSS custom properties swap via [data-theme]
+     ====================================================== */
+  const themeToggle = document.querySelector('#js-theme-toggle');
+  const themeLabel = document.querySelector('#js-theme-label');
+  let isDark = false;
+
+  themeToggle.addEventListener('click', () => {
+    isDark = !isDark;
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    themeLabel.textContent = isDark ? 'Dark' : 'Light';
+    themeToggle.setAttribute('aria-pressed', String(isDark));
+  });
+
+  /* ======================================================
+     Product data — the single source of truth for the shelf.
+     "strength: true" marks a strong active ingredient, which
+     feeds the active-ingredient tally in the routine panel.
+     ====================================================== */
+  const products = [
+    { id: 1, name: 'Foaming Gel Cleanser', concern: ['acne', 'pores'], strength: false,
+      blurb: 'A gentle daily cleanser that clears pores without stripping the skin barrier.' },
+    { id: 2, name: '2% Salicylic Acid Serum', concern: ['acne', 'pores'], strength: true,
+      blurb: 'A leave-on exfoliant for congested pores and post-acne marks.' },
+    { id: 3, name: 'Niacinamide 10% Serum', concern: ['pores', 'dullness'], strength: false,
+      blurb: 'Refines the look of pores and evens tone over time.' },
+    { id: 4, name: 'Vitamin C Brightening Drops', concern: ['dullness'], strength: true,
+      blurb: 'Antioxidant support that fades dullness and brightens over weeks of use.' },
+    { id: 5, name: 'Centella Calming Cream', concern: ['acne'], strength: false,
+      blurb: 'A barrier-repair moisturizer for reactive, breakout-prone skin.' },
+    { id: 6, name: 'Hyaluronic Acid Mist', concern: ['hydration'], strength: false,
+      blurb: 'A lightweight, layerable mist for a midday moisture top-up.' },
+    { id: 7, name: 'Ceramide Barrier Balm', concern: ['hydration', 'acne'], strength: false,
+      blurb: 'A richer moisturizer that locks in hydration overnight.' },
+    { id: 8, name: '0.3% Retinal Night Serum', concern: ['dullness', 'pores'], strength: true,
+      blurb: 'A gentler retinoid for texture and tone — start a couple of nights a week.' },
+    { id: 9, name: 'Mineral SPF 50', concern: ['acne', 'pores', 'dullness', 'hydration'], strength: false,
+      blurb: 'Broad-spectrum sun protection — the step every routine actually needs.' },
+  ];
+
+  let activeFilter = 'all';
+
+  /* ======================================================
+     Shelf filtering + rendering.
+     Input: click on a .js-chip
+     Process: set `activeFilter`, filter the `products` array
+     Output: rebuild #js-product-grid from scratch — no
+     innerHTML, every node built with createElement.
+     ====================================================== */
+  const chipRow = document.querySelector('#js-chip-row');
+  const grid = document.querySelector('#js-product-grid');
+  const gridEmpty = document.querySelector('#js-grid-empty');
+
+  function renderGrid() {
+    grid.textContent = '';
+
+    const visible = activeFilter === 'all'
+      ? products
+      : products.filter((p) => p.concern.includes(activeFilter));
+
+    visible.forEach((product) => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+
+      const tagRow = document.createElement('div');
+      tagRow.className = 'tag-row';
+      product.concern.forEach((c) => {
+        const tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.textContent = c;
+        tagRow.appendChild(tag);
+      });
+      if (product.strength) {
+        const strengthTag = document.createElement('span');
+        strengthTag.className = 'tag is-strength';
+        strengthTag.textContent = 'active';
+        tagRow.appendChild(strengthTag);
+      }
+
+      const title = document.createElement('h3');
+      title.textContent = product.name;
+
+      const blurb = document.createElement('p');
+      blurb.textContent = product.blurb;
+
+      const addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.textContent = 'Add to routine';
+      addBtn.addEventListener('click', () => addToRoutine(product.name, product.strength));
+
+      card.append(tagRow, title, blurb, addBtn);
+      grid.appendChild(card);
+    });
+
+    gridEmpty.style.display = visible.length ? 'none' : 'block';
+  }
+
+  chipRow.querySelectorAll('.js-chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chipRow.querySelectorAll('.js-chip').forEach((c) => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      activeFilter = chip.dataset.concern;
+      renderGrid();
+    });
+  });
+
+  renderGrid();
+
+  /* ======================================================
+     Routine builder.
+     Input: "Add to routine" on a card / custom Add button /
+            Enter key / checkbox / remove button
+     Process: mutate the `routine` array (the source of truth)
+     Output: rebuild #js-routine-list and re-check the active
+     ingredient tally.
+     ====================================================== */
+  const routineList = document.querySelector('#js-routine-list');
+  const routineEmpty = document.querySelector('#js-routine-empty');
+  const customInput = document.querySelector('#js-custom-input');
+  const addCustomButton = document.querySelector('#js-add-custom');
+  const activeCountDisplay = document.querySelector('#js-active-count');
+  const thresholdNote = document.querySelector('#js-threshold-note');
+  const warnSwitch = document.querySelector('#js-warn-switch');
+
+  let routine = [];
+  let nextId = 1;
+  let warnEnabled = true;
+  const SAFE_LIMIT = 2;
+
+  function addToRoutine(name, isActive) {
+    routine.push({ id: nextId++, text: name, applied: false, active: Boolean(isActive) });
+    renderRoutine();
+  }
+
+  function renderRoutine() {
+    routineList.textContent = '';
+
+    routine.forEach((step, index) => {
+      const li = document.createElement('li');
+      if (step.applied) li.classList.add('is-applied');
+
+      const badge = document.createElement('span');
+      badge.className = 'step-badge';
+      badge.textContent = String(index + 1).padStart(2, '0');
+
+      const check = document.createElement('button');
+      check.type = 'button';
+      check.textContent = step.applied ? '[x]' : '[ ]';
+      check.setAttribute('aria-label', 'Toggle applied');
+      check.addEventListener('click', () => {
+        step.applied = !step.applied;
+        renderRoutine();
+      });
+
+      const text = document.createElement('span');
+      text.className = 'product-text';
+      text.textContent = step.text;
+
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.textContent = '×';
+      remove.setAttribute('aria-label', 'Remove step');
+      remove.addEventListener('click', () => {
+        routine = routine.filter((s) => s.id !== step.id);
+        renderRoutine();
+      });
+
+      li.append(badge, check, text, remove);
+      routineList.appendChild(li);
+    });
+
+    routineEmpty.style.display = routine.length ? 'none' : 'block';
+    renderTally();
+  }
+
+  function renderTally() {
+    const activeCount = routine.filter((s) => s.active).length;
+    activeCountDisplay.textContent = activeCount;
+
+    if (warnEnabled && activeCount > SAFE_LIMIT) {
+      thresholdNote.textContent = `${activeCount} actives in today's routine — above the usual limit of ${SAFE_LIMIT}. Consider spacing some out.`;
+      thresholdNote.classList.add('is-alert');
+    } else if (warnEnabled) {
+      thresholdNote.textContent = `Within the usual limit of ${SAFE_LIMIT} actives per routine.`;
+      thresholdNote.classList.remove('is-alert');
+    } else {
+      thresholdNote.textContent = 'Warnings are off.';
+      thresholdNote.classList.remove('is-alert');
+    }
+  }
+
+  warnSwitch.addEventListener('click', () => {
+    const nowOn = warnSwitch.classList.toggle('is-on');
+    warnSwitch.setAttribute('aria-pressed', String(nowOn));
+    warnEnabled = nowOn;
+    renderTally();
+  });
+
+  function addCustomStep() {
+    const value = customInput.value.trim();
+    if (!value) return;
+    addToRoutine(value, false);
+    customInput.value = '';
+    customInput.focus();
+  }
+
+  addCustomButton.addEventListener('click', addCustomStep);
+  customInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') addCustomStep();
+  });
+
+  renderRoutine();
+</script>
+
+</body>
+</html>
